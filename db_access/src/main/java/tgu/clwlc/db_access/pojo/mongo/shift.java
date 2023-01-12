@@ -1,4 +1,4 @@
-package tgu.clwlc.db_access.pojo;
+package tgu.clwlc.db_access.pojo.mongo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package tgu.clwlc.db_access.pojo;
+package tgu.clwlc.db_access.pojo.mysql;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

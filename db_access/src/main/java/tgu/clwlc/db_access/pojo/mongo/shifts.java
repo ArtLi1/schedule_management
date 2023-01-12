@@ -1,9 +1,8 @@
-package tgu.clwlc.db_access.pojo;
+package tgu.clwlc.db_access.pojo.mongo;
 
 
 import lombok.Data;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -17,19 +16,18 @@ public class shifts {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             this.date = simpleDateFormat.parse(simpleDateFormat.format(date));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void setDate(String  date) {
+
+    public void setDate(String date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("");
         try {
             this.date = simpleDateFormat.parse(date);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
 }
 
