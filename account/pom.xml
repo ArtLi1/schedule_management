@@ -16,6 +16,7 @@
             <groupId>tgu.clwlc</groupId>
             <artifactId>FeignClient</artifactId>
         </dependency>
+
     </dependencies>
 
     <properties>
