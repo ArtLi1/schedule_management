@@ -11,6 +11,13 @@
 
     <artifactId>schedule</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>tgu.clwlc</groupId>
+            <artifactId>FeignClient</artifactId>
+        </dependency>
+    </dependencies>
+
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
