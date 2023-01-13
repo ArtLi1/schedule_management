@@ -1,9 +1,13 @@
-package tgu.clwlc.db_access.pojo.mongo;
+package tgu.clwlc.FeignClient.pojo.mongo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class custom_rules {
     private long id;

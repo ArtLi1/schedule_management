@@ -1,4 +1,4 @@
-package tgu.clwlc.db_access.pojo.mongo;
+package tgu.clwlc.FeignClient.pojo.mongo;
 
 import java.util.List;
 

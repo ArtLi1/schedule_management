@@ -1,11 +1,11 @@
 package tgu.clwlc.db_access.Controller;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tgu.clwlc.FeignClient.pojo.mysql.Shop;
 import tgu.clwlc.db_access.dao.ShopMapper;
-import tgu.clwlc.db_access.pojo.mysql.Shop;
 
 import javax.annotation.Resource;
 
@@ -17,7 +17,8 @@ public class ShopController {
     ShopMapper shopMapper;
 
     @PostMapping
-    public int addShop(Shop shop){
+    public int addShop(@RequestBody Shop shop){
+        System.out.println(shop.toString());
         shopMapper.insert(shop);
         return 0;
     }
