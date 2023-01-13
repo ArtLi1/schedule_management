@@ -16,3 +16,5 @@ spring:
     nacos:
       server-addr: localhost:8848
 
+server:
+  port: 20000

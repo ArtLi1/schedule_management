@@ -22,7 +22,7 @@ public class shifts {
     }
 
     public void setDate(String date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             this.date = simpleDateFormat.parse(date);
         } catch (Exception e) {

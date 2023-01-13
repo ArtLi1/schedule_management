@@ -1,11 +1,11 @@
-package tgu.clwlc.FeignClient;
+package tgu.Inform;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FeignClientApplication {
+public class InformApplication {
     public static void main(String[] args) {
-        SpringApplication.run(FeignClientApplication.class,args);
+        SpringApplication.run(InformApplication.class,args);
     }
 }
