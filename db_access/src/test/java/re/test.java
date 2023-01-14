@@ -4,14 +4,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import tgu.clwlc.FeignClient.pojo.mongo.forecast;
+import tgu.clwlc.FeignClient.pojo.mongo.forecast_data;
+import tgu.clwlc.FeignClient.pojo.mysql.User;
+import tgu.clwlc.FeignClient.util.DateFormat;
+import tgu.clwlc.FeignClient.util.SnowflakeIdGenerate;
+import tgu.clwlc.db_access.Controller.ForecastController;
 import tgu.clwlc.db_access.dbAccessApplication;
-import tgu.clwlc.db_access.pojo.mongo.shift;
-import tgu.clwlc.db_access.pojo.mongo.shifts;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,25 +22,82 @@ public class test {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    @Autowired
+    ForecastController forecastController;
+
+    SnowflakeIdGenerate idGenerate = new SnowflakeIdGenerate(888);
+
     @Test
-    public void t1(){
-        shifts shift = new shifts();
-        shift.setDate("2022-3-5");
-        List<tgu.clwlc.db_access.pojo.mongo.shift> list = new ArrayList<>();
-        list.add(new shift(2.5F, 3.5F,2));
-        list.add(new shift(1.5F,3.5F,3));
-        shift.setData(list);
-        mongoTemplate.insert(shift);
-    }
-    @Test
-    public void t2(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            List<shifts> date = mongoTemplate.find(new Query(Criteria.where("date").is(simpleDateFormat.parse("2022-3-5"))), shifts.class);
-            date.forEach(System.out::println);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+    public void t() {
+
+        {//用户数据
+            User user1 = new User(idGenerate.nextId(),50141025275905L,"u1","email",1,152,"123");
+
         }
 
+
+        {//预测数据
+//        forecast forecast = new forecast();
+//        forecast.setDate("2022-1-1");
+//        forecast.setUid(50141025275905L);
+//        forecast_data data1 = new forecast_data(8, 8.5f, 0);
+//        forecast_data data2 = new forecast_data(8.5f, 9, 0.1f);
+//        forecast_data data3 = new forecast_data(9, 9.5f, 1.3f);
+//        forecast_data data4 = new forecast_data(9.5f, 10, 5.7f);
+//        forecast_data data5 = new forecast_data(10, 10.5f, 11.1f);
+//        forecast_data data6 = new forecast_data(10.5f, 11, 13.4f);
+//        forecast_data data7 = new forecast_data(11, 11.5f, 13.3f);
+//        forecast_data data8 = new forecast_data(11.5f, 12, 17.3f);
+//        forecast_data data9 = new forecast_data(12, 12.5f, 18.1f);
+//        forecast_data data10 = new forecast_data(12.5f, 13, 22.8f);
+//        forecast_data data11 = new forecast_data(13, 13.5f, 26.9f);
+//        forecast_data data12 = new forecast_data(13.5f, 14, 21.6f);
+//        forecast_data data13 = new forecast_data(14, 14.5f, 18.3f);
+//        forecast_data data14 = new forecast_data(14.5f, 15, 17.2f);
+//        forecast_data data15 = new forecast_data(15f, 15.5f, 15.3f);
+//        forecast_data data16 = new forecast_data(15.5f, 16, 14.3f);
+//        forecast_data data17 = new forecast_data(16, 16.5f, 11.6f);
+//        forecast_data data18 = new forecast_data(16.5f, 17, 8.3f);
+//        forecast_data data19 = new forecast_data(17, 17.5f, 8.3f);
+//        forecast_data data20 = new forecast_data(17.5f, 18, 7.2f);
+//        forecast_data data21 = new forecast_data(18, 18.5f, 5.6f);
+//        forecast_data data22 = new forecast_data(18.5f, 19, 5.6f);
+//        forecast_data data23 = new forecast_data(19, 19.5f, 2.5f);
+//        forecast_data data24 = new forecast_data(19.5f, 20, 2.1f);
+//        forecast_data data25 = new forecast_data(20, 20.5f, 0.1f);
+//        forecast_data data26 = new forecast_data(20.5f, 21, 0.1f);
+//        List<forecast_data> data = new ArrayList<>();
+//        data.add(data1);
+//        data.add(data7);
+//        data.add(data12);
+//        data.add(data17);
+//        data.add(data22);
+//        data.add(data2);
+//        data.add(data8);
+//        data.add(data13);
+//        data.add(data18);
+//        data.add(data23);
+//        data.add(data3);
+//        data.add(data9);
+//        data.add(data14);
+//        data.add(data19);
+//        data.add(data24);
+//        data.add(data4);
+//        data.add(data10);
+//        data.add(data15);
+//        data.add(data20);
+//        data.add(data25);
+//        data.add(data5);
+//        data.add(data11);
+//        data.add(data16);
+//        data.add(data21);
+//        data.add(data26);
+//        data.add(data6);
+//        forecast.setData(data);
+//        forecastController.addData(forecast);
+        }
+    }
+    @Test
+    public void t2() {
     }
 }

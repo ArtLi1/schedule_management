@@ -1,4 +1,4 @@
-package tgu.clwlc.account.util;
+package tgu.clwlc.FeignClient.util;
 
 public class SnowflakeIdGenerate {
 
