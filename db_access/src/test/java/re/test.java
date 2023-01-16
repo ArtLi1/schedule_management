@@ -10,6 +10,7 @@ import tgu.clwlc.FeignClient.pojo.mysql.User;
 import tgu.clwlc.FeignClient.util.DateFormat;
 import tgu.clwlc.FeignClient.util.SnowflakeIdGenerate;
 import tgu.clwlc.db_access.Controller.ForecastController;
+import tgu.clwlc.db_access.Controller.UserController;
 import tgu.clwlc.db_access.dbAccessApplication;
 
 import java.util.ArrayList;
@@ -25,21 +26,29 @@ public class test {
     @Autowired
     ForecastController forecastController;
 
+    @Autowired
+    UserController userController;
+
     SnowflakeIdGenerate idGenerate = new SnowflakeIdGenerate(888);
 
     @Test
     public void t() {
 
         {//用户数据
-            User user1 = new User(idGenerate.nextId(),50141025275905L,"u1","email",1,152,"123");
-
+            User user1 = new User(idGenerate.nextId(),50141025275905L,"u0","email@q.c",1,152,"123");
+            for(int i=0;i<15;i++){
+            user1.setEmail(user1.getEmail()+"1");
+            userController.addUser(user1);
+            user1.setId(idGenerate.nextId());
+            user1.setName("u"+(i+1));
+            }
         }
 
 
         {//预测数据
 //        forecast forecast = new forecast();
-//        forecast.setDate("2022-1-1");
-//        forecast.setUid(50141025275905L);
+//        forecast.setDate("2021-12-27");
+//        forecast.setSid(50141025275905L);
 //        forecast_data data1 = new forecast_data(8, 8.5f, 0);
 //        forecast_data data2 = new forecast_data(8.5f, 9, 0.1f);
 //        forecast_data data3 = new forecast_data(9, 9.5f, 1.3f);
@@ -99,5 +108,6 @@ public class test {
     }
     @Test
     public void t2() {
+
     }
 }

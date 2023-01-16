@@ -17,8 +17,10 @@ public class ForecastController {
     @Resource
     MongoTemplate mongoTemplate;
 
-    @GetMapping
-    public List<forecast> getForecastData(@RequestParam(value = "date") String date, @RequestParam(value = "sid") long sid){
+
+
+    @GetMapping("/{sid}/{date}")
+    public List<forecast> getForecastData(@PathVariable(value = "date") String date, @PathVariable(value = "sid") long sid){
         return mongoTemplate.find(new Query(Criteria.where("date").is(DateFormat.ToDate(date)).and("sid").is(sid)), forecast.class);
     }
 

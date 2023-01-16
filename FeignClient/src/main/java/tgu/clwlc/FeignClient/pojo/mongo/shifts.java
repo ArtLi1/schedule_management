@@ -10,7 +10,11 @@ import java.util.List;
 
 @Data
 public class shifts {
+
+    private long sid;
+
     private Date date;
+
     private List<shift> data;
 
     public void setDate(Date date) {

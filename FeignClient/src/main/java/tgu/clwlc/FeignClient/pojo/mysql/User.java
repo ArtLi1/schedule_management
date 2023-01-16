@@ -22,8 +22,9 @@ public class User {
     private String email;
     @NotBlank
     private int job;
-    @Pattern(regexp = "1\\d{10}$")
+
     private long phone;
+
     private String password;
 
 }

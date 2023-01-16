@@ -18,6 +18,8 @@ public class test {
 
     @Test
     public void t1(){
-
+        shiftsGenerate.generate("2022-1-1",50141025275905L);
+//        System.out.println(DateFormat.getFirstDayOfWeek("2022-1-1"));
     }
+
 }

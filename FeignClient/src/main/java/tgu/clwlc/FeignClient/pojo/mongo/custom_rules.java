@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class custom_rules {
-    private long id;
+    private long sid;
     private float pre_time = 1;                     //开店前准备时间
     private float pre_parameter = 100;              //开店前所需人数为店面size/该参数
     private float parameter = 3.8f;                 //某个时间段中所需人数为预测客流量/该参数

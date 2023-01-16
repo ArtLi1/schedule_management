@@ -2,10 +2,13 @@ package tgu.clwlc.FeignClient.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DateFormat {
     static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 
     public static Date ToDate(String str){
         try {
@@ -23,7 +26,38 @@ public class DateFormat {
         }
     }
 
+
+
     public static String ToString(Date date){
         return simpleDateFormat.format(date);
     }
+
+    /**
+     * 获取指定日期所在周的周一
+     *
+     * @param date 日期
+     */
+    public static Date getFirstDayOfWeek(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            c.add(Calendar.DAY_OF_MONTH, -1);
+        }
+        c.add(Calendar.DATE, c.getFirstDayOfWeek() - c.get(Calendar.DAY_OF_WEEK) + 1);
+        return c.getTime();
+    }
+
+    public static Date getFirstDayOfWeek(String date) {
+        return getFirstDayOfWeek(ToDate(date));
+    }
+
+    public static Date DateAddOneDay(Date date){
+        Calendar c = new GregorianCalendar();
+        c.setTime(date);
+        // 把日期往后增加一天,整数  往后推,负数往前移动
+        c.add(Calendar.DATE, 1);
+        // 这个时间就是日期往后推一天的结果
+        return c.getTime();
+    }
+
 }
