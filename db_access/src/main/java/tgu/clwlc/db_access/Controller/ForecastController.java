@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 import tgu.clwlc.FeignClient.pojo.mongo.forecast;
-import tgu.clwlc.FeignClient.util.DateFormat;
+import tgu.clwlc.FeignClient.util.DateUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,7 +21,11 @@ public class ForecastController {
 
     @GetMapping("/{sid}/{date}")
     public List<forecast> getForecastData(@PathVariable(value = "date") String date, @PathVariable(value = "sid") long sid){
-        return mongoTemplate.find(new Query(Criteria.where("date").is(DateFormat.ToDate(date)).and("sid").is(sid)), forecast.class);
+        List<forecast> forecasts = mongoTemplate.find(new Query(Criteria.where("date").is(DateUtils.ToDate(date)).and("sid").is(sid)), forecast.class);
+        forecasts.forEach(f->{
+            f.setDate(DateUtils.DateAddOneDay(f.getDate()));
+        });
+        return forecasts;
     }
 
     @PostMapping

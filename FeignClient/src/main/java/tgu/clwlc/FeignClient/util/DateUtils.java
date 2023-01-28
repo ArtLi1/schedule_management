@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class DateFormat {
+public class DateUtils {
     static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 
@@ -59,5 +59,29 @@ public class DateFormat {
         // 这个时间就是日期往后推一天的结果
         return c.getTime();
     }
+
+
+
+    public static int getWeekOfDate(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w == 0) w = 7;
+        return w;
+    }
+
+    public static int getWeekOfDate(String date){
+        return getWeekOfDate(ToDate(date));
+    }
+
+    public static Date addHalfHours(Date date,int i){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.SECOND, i*1800);
+        Date time = c.getTime();
+        return time;
+    }
+
+
 
 }
