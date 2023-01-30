@@ -125,7 +125,6 @@ public class shiftsGenerate {
             }
 
         }
-        System.out.println(1);
     }
 
 
