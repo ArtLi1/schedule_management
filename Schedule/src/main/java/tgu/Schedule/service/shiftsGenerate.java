@@ -7,6 +7,7 @@ import tgu.clwlc.FeignClient.API.dbAccessApi;
 import tgu.clwlc.FeignClient.pojo.mongo.*;
 import tgu.clwlc.FeignClient.pojo.mysql.Shop;
 import tgu.clwlc.FeignClient.pojo.mysql.User;
+import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
 import tgu.clwlc.FeignClient.util.DateUtils;
 
 import javax.annotation.Resource;
@@ -123,8 +124,14 @@ public class shiftsGenerate {
                     }
                 }
             }
-
         }
+
+        List<secureShifts> rs = new ArrayList<>();
+        for (shifts shifts : dutyList) {
+            rs.add(new secureShifts(shifts));
+        }
+
+        dbAccessApi.addShifts(rs);
     }
 
 

@@ -8,6 +8,7 @@ import tgu.clwlc.FeignClient.pojo.mongo.forecast;
 import tgu.clwlc.FeignClient.pojo.mongo.preferences;
 import tgu.clwlc.FeignClient.pojo.mysql.Shop;
 import tgu.clwlc.FeignClient.pojo.mysql.User;
+import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -47,5 +48,9 @@ public interface dbAccessApi {
 
     @GetMapping("/customRule/{sid}")
     public custom_rules getRules(@PathVariable long sid);
+
+
+    @PutMapping("/shifts")
+    public void addShifts(@RequestBody List<secureShifts> shifts);
 
 }
