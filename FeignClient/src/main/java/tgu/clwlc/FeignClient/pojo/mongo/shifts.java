@@ -30,7 +30,7 @@ public class shifts {
         this.date = date;
     }
 
-    public static shifts shiftsGenerator(forecast forecast,custom_rules rule,double size){
+    public static shifts emptyShiftsGenerator(forecast forecast, custom_rules rule, double size){
         shifts s = new shifts(forecast.getSid(),forecast.getDate());
 
         int day = DateUtils.getWeekOfDate(forecast.getDate());
@@ -45,7 +45,10 @@ public class shifts {
 
         List<shift> list = new ArrayList<>();
 
-        list.add(new shift(preStart,start,pre_capacity));
+
+        for(int i=0;i<(start-preStart)/0.5;i++){
+            list.add(new shift(preStart+i*0.5,preStart+(i+1)*0.5,pre_capacity));
+        }
 
         if(day>5) {
             forecast.getData().forEach(f -> {
@@ -61,7 +64,9 @@ public class shifts {
             });
         }
 
-        list.add(new shift(end,afterEnd,after_capacity));
+        for(int i=0;i<(afterEnd-end)/0.5;i++){
+            list.add(new shift(end+i*0.5,end+(i+1)*0.5,pre_capacity));
+        }
 
         s.setData(list);
         return s;

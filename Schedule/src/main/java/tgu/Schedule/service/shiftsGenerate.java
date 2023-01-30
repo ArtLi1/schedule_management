@@ -76,8 +76,14 @@ public class shiftsGenerate {
                 for (i = 0; i < shiftData.size(); i++) {
                     shift shift = shiftData.get(i);
                     if (shift.getBegin() >= endLast) break;        //退出 进行最后的班次填入
-                    if (i == 0) typeInHandler(shift, rules.getPre(), duration, day, preferenceUserList, userData);
-                    else typeInHandler(shift, rules.getMid(), duration, day, preferenceUserList, userData);
+                    if ((day<6&&shift.getBegin()<9)||(day>=6&&shift.getBegin()<10)) {
+                        typeInHandler(shift, rules.getPre(), duration, day, preferenceUserList, userData);
+                    }
+                    else if((day<6&&shift.getBegin()>=9&&shift.getBegin()<21)||(day>=6&&shift.getBegin()>=10&&shift.getBegin()<22)) {
+                        typeInHandler(shift, rules.getMid(), duration, day, preferenceUserList, userData);
+                    }else {
+                        typeInHandler(shift, rules.getAfter(), duration, day, preferenceUserList, userData);
+                    }
                     double interval = shift.getEnd() - shift.getBegin();
                     //没到4小时 则尽量填满至4小时
                     lengthenAll(shifts, i, duration, userMap, day);
@@ -130,10 +136,18 @@ public class shiftsGenerate {
         for (shifts shifts : dutyList) {
             rs.add(new secureShifts(shifts));
         }
-
+        removeExistData(rs);
         dbAccessApi.addShifts(rs);
     }
 
+
+    private void removeExistData(List<secureShifts> rs){
+        List<Date> dates = new ArrayList<>();
+        for (secureShifts r : rs) {
+            dates.add(r.getDate());
+        }
+        dbAccessApi.delShifts(dates);
+    }
 
     private void lengthenAll(shifts shifts, int begin, Map<User, Double> duration, Map<User, user_with_preference> userMap, int day) {
         List<shift> shiftData = shifts.getData();
@@ -318,7 +332,7 @@ public class shiftsGenerate {
         List<shifts> list = new ArrayList<>();
 
         forecast.forEach(f -> {
-            shifts s = shifts.shiftsGenerator(f, rules, shop.getSize());
+            shifts s = shifts.emptyShiftsGenerator(f, rules, shop.getSize());
             list.add(s);
         });
 

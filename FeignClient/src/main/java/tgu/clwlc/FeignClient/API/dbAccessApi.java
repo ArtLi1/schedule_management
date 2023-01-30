@@ -11,6 +11,7 @@ import tgu.clwlc.FeignClient.pojo.mysql.User;
 import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @FeignClient("dbAccess")
@@ -52,5 +53,8 @@ public interface dbAccessApi {
 
     @PutMapping("/shifts")
     public void addShifts(@RequestBody List<secureShifts> shifts);
+
+    @DeleteMapping("/shifts")
+    public void delShifts(@RequestBody List<Date> list);
 
 }
