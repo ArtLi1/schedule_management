@@ -38,7 +38,7 @@ public class shifts {
         int end = day<6?21:22;
 
         int preStart = (int) (start-rule.getPre_time());
-        int pre_capacity = (int) (size%rule.getPre_parameter()==0?size%rule.getPre_parameter():size%rule.getPre_parameter()+1);
+        int pre_capacity = (int) (size%rule.getPre_parameter()==0?size/rule.getPre_parameter():size/rule.getPre_parameter()+1);
 
         int afterEnd = (int) (end+rule.getAfter_time());
         int after_capacity = (int)((size/rule.getAfter_parameter1())+rule.getAfter_parameter2());
@@ -49,13 +49,13 @@ public class shifts {
 
         if(day>5) {
             forecast.getData().forEach(f -> {
-                if(f.getBegin()>10&&f.getBegin()<22){
+                if(f.getBegin()>=10&&f.getBegin()<22){
                     list.add(new shift(f, rule.getParameter()));
                 }
             });
         }else {
             forecast.getData().forEach(f -> {
-                if(f.getBegin()>9&&f.getBegin()<21){
+                if(f.getBegin()>=9&&f.getBegin()<21){
                     list.add(new shift(f, rule.getParameter()));
                 }
             });

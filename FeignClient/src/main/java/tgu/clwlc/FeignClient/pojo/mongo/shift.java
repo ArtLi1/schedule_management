@@ -16,7 +16,7 @@ public class shift {
     double begin;
     double end;
     int capacity=0;
-    List<secureUser> list;
+    List<User> list;
 
     public shift(double begin, double end) {
         this.begin = begin;
@@ -41,7 +41,7 @@ public class shift {
     public shift(forecast_data data,double x){
         begin = data.getBegin();
         end = data.getEnd();
-        capacity = (int) (data.getData()/x);
+        capacity = (int) (data.getData()%x==0?data.getData()/x:data.getData()/x+1);
         list = new ArrayList<>();
     }
 }
