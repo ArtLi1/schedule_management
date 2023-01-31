@@ -1,12 +1,9 @@
 package tgu.clwlc.db_access.Controller;
 
 
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
-import tgu.clwlc.FeignClient.pojo.mongo.shifts;
 import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
+import tgu.clwlc.db_access.Service.shiftsService;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -16,21 +13,24 @@ import java.util.List;
 @RequestMapping("/shifts")
 public class ShiftsController {
 
+
     @Resource
-    MongoTemplate mongoTemplate;
+    shiftsService shiftsService;
+
+
+    @GetMapping("/{sid}/{date}")
+    public secureShifts getShifts(@PathVariable long sid,@PathVariable String date){
+        return shiftsService.getShifts(sid,date);
+    }
 
     @PutMapping
     public void addShifts(@RequestBody List<secureShifts> shifts){
-        for (secureShifts shift : shifts) {
-            mongoTemplate.insert(shift);
-        }
+      shiftsService.addShifts(shifts);
     }
 
     @DeleteMapping
-    public void delShifts(@RequestBody List<Date> list){
-        for(Date date : list) {
-            mongoTemplate.remove(new Query(Criteria.where("date").is(date)), secureShifts.class);
-        }
+    public void delShifts(@RequestBody long id,@RequestBody List<String> list){
+        shiftsService.delShifts(id,list);
     }
 
 
