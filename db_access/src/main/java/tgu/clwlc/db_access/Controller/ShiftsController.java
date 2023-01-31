@@ -29,7 +29,7 @@ public class ShiftsController {
     }
 
     @DeleteMapping
-    public void delShifts(@RequestBody long id,@RequestBody List<String> list){
+    public void delShifts(@RequestParam long id,@RequestBody List<String> list){
         shiftsService.delShifts(id,list);
     }
 

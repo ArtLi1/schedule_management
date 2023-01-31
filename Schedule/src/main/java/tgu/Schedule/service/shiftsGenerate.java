@@ -14,8 +14,8 @@ import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Service
 
+@Service
 public class shiftsGenerate {
     @Resource
     dbAccessApi dbAccessApi;
@@ -142,11 +142,11 @@ public class shiftsGenerate {
 
 
     private void removeExistData(List<secureShifts> rs){
-        List<Date> dates = new ArrayList<>();
+        List<String> dates = new ArrayList<>();
         for (secureShifts r : rs) {
             dates.add(r.getDate());
         }
-        dbAccessApi.delShifts(dates);
+        dbAccessApi.delShifts(rs.get(0).getSid(),dates);
     }
 
     private void lengthenAll(shifts shifts, int begin, Map<User, Double> duration, Map<User, user_with_preference> userMap, int day) {

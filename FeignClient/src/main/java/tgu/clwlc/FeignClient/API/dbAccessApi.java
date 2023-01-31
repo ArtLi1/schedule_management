@@ -55,7 +55,7 @@ public interface dbAccessApi {
     void addShifts(@RequestBody List<secureShifts> shifts);
 
     @DeleteMapping("/shifts")
-    void delShifts(@RequestBody List<Date> list);
+    void delShifts(@RequestParam long id,@RequestBody List<String> list);
 
     @GetMapping("/shifts/{sid}/{date}")
     secureShifts getShifts(@PathVariable long sid, @PathVariable String date);

@@ -108,18 +108,18 @@ public class test {
         data.add(data26);
         forecast.setData(data);
         forecastController.addData(forecast);
-//        forecast.setDate("2021-12-27");
-//        forecastController.addData(forecast);
-//            forecast.setDate("2021-12-28");
-//            forecastController.addData(forecast);
-//            forecast.setDate("2021-12-29");
-//            forecastController.addData(forecast);
-//            forecast.setDate("2021-12-30");
-//            forecastController.addData(forecast);
-//            forecast.setDate("2021-12-31");
-//            forecastController.addData(forecast);
-//            forecast.setDate("2022-1-1");
-//            forecastController.addData(forecast);
+        forecast.setDate("2021-12-27");
+        forecastController.addData(forecast);
+            forecast.setDate("2021-12-28");
+            forecastController.addData(forecast);
+            forecast.setDate("2021-12-29");
+            forecastController.addData(forecast);
+            forecast.setDate("2021-12-30");
+            forecastController.addData(forecast);
+            forecast.setDate("2021-12-31");
+            forecastController.addData(forecast);
+            forecast.setDate("2022-1-1");
+            forecastController.addData(forecast);
         }
     }
     @Test

@@ -57,7 +57,7 @@ public class shiftServiceImpl implements shiftsService{
     public void delShifts(long sid,List<String > list) {
         for(String date : list) {
             stringRedisTemplate.delete(joint(sid,date));
-            mongoTemplate.remove(new Query(Criteria.where("date").is(DateUtils.ToDate(date)).and("sid").is(sid)), secureShifts.class);
+            mongoTemplate.remove(new Query(Criteria.where("date").is(date).and("sid").is(sid)), secureShifts.class);
         }
     }
 
