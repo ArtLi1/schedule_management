@@ -29,8 +29,8 @@ public class ShiftsController {
     }
 
     @DeleteMapping
-    public void delShifts(@RequestParam long id,@RequestBody List<String> list){
-        shiftsService.delShifts(id,list);
+    void delShifts(@RequestHeader long id, @RequestHeader String date){
+        shiftsService.delShifts(id,date);
     }
 
 

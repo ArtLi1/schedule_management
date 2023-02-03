@@ -29,6 +29,7 @@ public class shiftServiceImpl implements shiftsService{
     @Resource
     StringRedisTemplate stringRedisTemplate;
 
+
     String CacheName = PROJECT_NAME+SHIFTS_NAME;
 
     @Override
@@ -36,7 +37,7 @@ public class shiftServiceImpl implements shiftsService{
         ValueOperations<String, String> stringVOps = stringRedisTemplate.opsForValue();
         secureShifts shifts = JSON.parseObject(stringVOps.get(joint(sid, date)), secureShifts.class);
         if (shifts == null) {
-            List<secureShifts> shiftsList = mongoTemplate.find(new Query(Criteria.where("sid").is(sid).and("date").is(DateUtils.ToDate(date))),secureShifts.class);
+            List<secureShifts> shiftsList = mongoTemplate.find(new Query(Criteria.where("sid").is(sid).and("date").is(date)),secureShifts.class);
             if(shiftsList.size()<1){
                return null;
             }
@@ -54,11 +55,9 @@ public class shiftServiceImpl implements shiftsService{
     }
 
     @Override
-    public void delShifts(long sid,List<String > list) {
-        for(String date : list) {
+    public void delShifts(long sid,String date) {
             stringRedisTemplate.delete(joint(sid,date));
             mongoTemplate.remove(new Query(Criteria.where("date").is(date).and("sid").is(sid)), secureShifts.class);
-        }
     }
 
 

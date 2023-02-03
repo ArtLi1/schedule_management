@@ -159,11 +159,9 @@ public class shiftsGenerate {
 
 
     private void removeExistData(List<secureShifts> rs){
-        List<String> dates = new ArrayList<>();
         for (secureShifts r : rs) {
-            dates.add(r.getDate());
+            ShiftsApi.delShifts(r.getSid(), r.getDate());
         }
-        ShiftsApi.delShifts(rs.get(0).getSid(),dates);
     }
 
     private void lengthenAll(shifts shifts, int begin, Map<User, Double> duration, Map<User, user_with_preference> userMap, int day) {

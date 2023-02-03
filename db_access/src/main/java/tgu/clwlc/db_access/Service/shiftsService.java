@@ -15,5 +15,5 @@ public interface shiftsService {
 
     public void addShifts(List<secureShifts> shifts);
 
-    public void delShifts(long sid,List<String > list);
+    public void delShifts(long sid,String list);
 }
