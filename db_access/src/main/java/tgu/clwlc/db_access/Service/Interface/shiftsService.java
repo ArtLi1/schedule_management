@@ -1,4 +1,4 @@
-package tgu.clwlc.db_access.Service;
+package tgu.clwlc.db_access.Service.Interface;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;

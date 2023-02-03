@@ -17,7 +17,7 @@ public class secureShift {
     double begin;
     double end;
     int capacity=0;
-    List<secureUser> list;
+    List<shiftsUser> list;
 
     public secureShift(shift shift){
         this.begin = shift.getBegin();
@@ -25,7 +25,7 @@ public class secureShift {
         this.capacity = shift.getCapacity();
         list = new ArrayList<>();
         for (User user : shift.getList()) {
-            list.add(new secureUser(user));
+            list.add(new shiftsUser(user));
         }
     }
 

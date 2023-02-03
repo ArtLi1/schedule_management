@@ -3,10 +3,9 @@ package tgu.clwlc.db_access.Controller;
 
 import org.springframework.web.bind.annotation.*;
 import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
-import tgu.clwlc.db_access.Service.shiftsService;
+import tgu.clwlc.db_access.Service.Interface.shiftsService;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 @RestController

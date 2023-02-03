@@ -1,4 +1,4 @@
-package tgu.clwlc.db_access.Service;
+package tgu.clwlc.db_access.Service.Impl;
 
 import com.alibaba.fastjson2.JSON;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -8,11 +8,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
-import tgu.clwlc.FeignClient.util.DateUtils;
+import tgu.clwlc.db_access.Service.Interface.shiftsService;
 
 import javax.annotation.Resource;
 
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +20,7 @@ import static tgu.clwlc.FeignClient.util.StringContent.SHIFTS_NAME;
 
 
 @Service
-public class shiftServiceImpl implements shiftsService{
+public class shiftServiceImpl implements shiftsService {
 
     @Resource
     MongoTemplate mongoTemplate;

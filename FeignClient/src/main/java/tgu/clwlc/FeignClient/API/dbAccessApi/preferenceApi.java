@@ -1,10 +1,7 @@
 package tgu.clwlc.FeignClient.API.dbAccessApi;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import tgu.clwlc.FeignClient.pojo.mongo.preferences;
 
 import javax.validation.Valid;
@@ -15,5 +12,9 @@ public interface preferenceApi {
     preferences getPreference(@PathVariable long id);
 
     @PostMapping("/preference")
-    int addPreference(@Valid @RequestBody preferences preferences);
+    void addPreference(@Valid @RequestBody preferences preferences);
+
+    @PutMapping("/preference")
+    public boolean modifyPreference(@RequestBody preferences preferences);
+
 }
