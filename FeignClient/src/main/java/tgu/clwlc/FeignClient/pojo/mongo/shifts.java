@@ -13,25 +13,25 @@ public class shifts {
 
     private long sid;
 
-    private Date date;
+    private String date;
 
     private List<shift> data;
 
     public void setDate(Date date) {
-        this.date = DateUtils.ToDate(date);
+        this.date = DateUtils.ToString(date);
     }
 
     public void setDate(String date) {
-        this.date = DateUtils.ToDate(date);
+        this.date = date;
     }
 
-    public shifts(long sid, Date date) {
+    public shifts(long sid, String  date) {
         this.sid = sid;
         this.date = date;
     }
 
     public static shifts emptyShiftsGenerator(forecast forecast, custom_rules rule, double size){
-        shifts s = new shifts(forecast.getSid(),forecast.getDate());
+        shifts s = new shifts(forecast.getSid(), DateUtils.ToString(forecast.getDate()));
 
         int day = DateUtils.getWeekOfDate(forecast.getDate());
         int start = day<6?9:10;

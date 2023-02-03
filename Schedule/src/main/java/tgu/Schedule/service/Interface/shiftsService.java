@@ -1,4 +1,4 @@
-package tgu.Schedule.service;
+package tgu.Schedule.service.Interface;
 
 import org.springframework.stereotype.Service;
 import tgu.clwlc.FeignClient.pojo.result;

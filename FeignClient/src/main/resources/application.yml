@@ -14,3 +14,5 @@ spring:
   cloud:
     nacos:
       server-addr: localhost:8848
+  main:
+    allow-bean-definition-overriding: true

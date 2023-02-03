@@ -1,9 +1,11 @@
-package tgu.Schedule.service;
+package tgu.Schedule.service.Impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import tgu.clwlc.FeignClient.API.dbAccessApi;
+import tgu.Schedule.service.shiftsGenerate;
+import tgu.Schedule.service.Interface.shiftsService;
+import tgu.clwlc.FeignClient.API.dbAccessApi.shiftsApi;
 import tgu.clwlc.FeignClient.pojo.result;
 import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
 import tgu.clwlc.FeignClient.util.DateUtils;
@@ -14,20 +16,27 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class shiftsServiceImpl implements shiftsService{
+public class shiftsServiceImpl implements shiftsService {
 
     @Resource
-    dbAccessApi dbAccessApi;
+    shiftsApi shiftsApi;
 
     @Resource
     shiftsGenerate generate;
 
+    @Resource
+    StringRedisTemplate stringRedisTemplate;
+
     @Override
     public result getShifts(String date, long sid) {
+
+        ValueOperations<String, String> ValueOps = stringRedisTemplate.opsForValue();
+
+//        ValueOps.get()
+
         List<secureShifts> list = new ArrayList<>();
-        Date day = DateUtils.getFirstDayOfWeek(date);
         for(int i=0;i<7;i++){
-            secureShifts shifts = dbAccessApi.getShifts(sid, date);
+            secureShifts shifts = shiftsApi.getShifts(sid, date);
             if(shifts==null){
                 generate.generate(date,sid);
                 return result.fail("排班生成中");
@@ -36,4 +45,8 @@ public class shiftsServiceImpl implements shiftsService{
         }
         return result.success(list);
     }
+
+
+
+//    public String
 }

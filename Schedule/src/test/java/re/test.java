@@ -5,9 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import tgu.Schedule.ScheduleApplication;
 import tgu.Schedule.service.shiftsGenerate;
-import tgu.clwlc.FeignClient.API.dbAccessApi;
+import tgu.clwlc.FeignClient.API.dbAccessApi.forecastApi;
 import tgu.clwlc.FeignClient.pojo.mongo.forecast;
-import tgu.clwlc.FeignClient.pojo.mongo.forecast_data;
 import tgu.clwlc.FeignClient.util.DateUtils;
 
 import javax.annotation.Resource;
@@ -22,7 +21,7 @@ public class test {
     shiftsGenerate shiftsGenerate;
 
     @Resource
-    dbAccessApi accessApi;
+    forecastApi forecastApi;
 
     private final Long TESTSID = 50141025275905L;
 
@@ -35,7 +34,7 @@ public class test {
 
     @Test
     public void t2(){
-        List<forecast> forecastData = accessApi.getForecastData("2021-12-27", TESTSID);
+        List<forecast> forecastData = forecastApi.getForecastData("2021-12-27", TESTSID);
         Date date = forecastData.get(0).getDate();
         System.out.println(DateUtils.ToString(date));
     }
