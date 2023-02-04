@@ -28,10 +28,13 @@ public class ShiftsController {
     }
 
     @DeleteMapping
-    void delShifts(@RequestHeader long id, @RequestHeader String date){
-        shiftsService.delShifts(id,date);
+    boolean delShifts(@RequestHeader long id, @RequestHeader String date){
+        return shiftsService.delShifts(id,date);
     }
 
-
+    @PostMapping
+    boolean modifyShifts(@RequestBody secureShifts shifts){
+        return shiftsService.modifyShifts(shifts);
+    }
 
 }

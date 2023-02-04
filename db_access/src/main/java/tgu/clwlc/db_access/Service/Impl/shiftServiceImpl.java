@@ -9,9 +9,9 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
 import tgu.clwlc.db_access.Service.Interface.shiftsService;
+import tgu.clwlc.db_access.Utils.MongoUtils;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +24,9 @@ public class shiftServiceImpl implements shiftsService {
 
     @Resource
     MongoTemplate mongoTemplate;
+
+    @Resource
+    MongoUtils mongoUtils;
 
     @Resource
     StringRedisTemplate stringRedisTemplate;
@@ -54,9 +57,23 @@ public class shiftServiceImpl implements shiftsService {
     }
 
     @Override
-    public void delShifts(long sid,String date) {
-            stringRedisTemplate.delete(joint(sid,date));
-            mongoTemplate.remove(new Query(Criteria.where("date").is(date).and("sid").is(sid)), secureShifts.class);
+    public boolean delShifts(long sid, String date) {
+        stringRedisTemplate.delete(joint(sid, date));
+        try {
+            return mongoUtils.remove(new secureShifts(sid,date), "sid", "date")>0;
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean modifyShifts(secureShifts shifts) {
+        try {
+           Object o = mongoUtils.Modify(shifts,MongoUtils.defaultOptions());
+            return o!=null;
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

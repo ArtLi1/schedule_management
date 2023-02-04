@@ -12,7 +12,10 @@ public interface shiftsApi {
     void addShifts(@RequestBody List<secureShifts> shifts);
 
     @DeleteMapping("/shifts")
-    void delShifts(@RequestHeader long id, @RequestHeader String date);
+    boolean delShifts(@RequestHeader long id, @RequestHeader String date);
+
+    @PostMapping("/shifts")
+    void modifyShifts(@RequestBody secureShifts shifts);
 
     @GetMapping("/shifts/{sid}/{date}")
     secureShifts getShifts(@PathVariable long sid, @PathVariable String date);

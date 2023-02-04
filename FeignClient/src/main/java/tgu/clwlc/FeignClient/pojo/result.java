@@ -12,6 +12,13 @@ public class result {
     private String message;
     private Object object;
 
+
+    public static result State(boolean b){
+        result result = new result();
+        result.setState(b);
+        return result;
+    }
+
     public static result success(Object o){
         result rs = new result();
         rs.setState(true);

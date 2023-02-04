@@ -8,8 +8,11 @@ public interface preferenceService {
 
     public result addPreference(preferences preferences);
 
-    public result getPreference(long uid);
+    public result getPreferenceByUid(long uid);
+
+    public result getPreferenceBySid(long sid);
 
     public result modifyPreference(preferences preferences);
 
+    public result delPreference(long uid);
 }

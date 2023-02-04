@@ -26,9 +26,14 @@ public class PersonalPreferenceController {
     @Resource
     preferenceService preferenceService;
 
-    @GetMapping("/{id}")
-    public preferences getPreference(@PathVariable long id){
-        return preferenceService.getPreference(id);
+    @GetMapping("/uid/{uid}")
+    public preferences getPreferenceByUid(@PathVariable long uid){
+        return preferenceService.getPreferenceByUid(uid);
+    }
+
+    @GetMapping("/sid/{sid}")
+    public List<preferences> getPreferenceBySid(@PathVariable long sid){
+        return preferenceService.getPreferenceBySid(sid);
     }
 
     @PostMapping
@@ -39,6 +44,11 @@ public class PersonalPreferenceController {
     @PutMapping
     public boolean modifyPreference(@RequestBody preferences preferences){
         return preferenceService.modify(preferences);
+    }
+
+    @DeleteMapping
+    public boolean delPreference(@RequestBody long uid){
+        return preferenceService.delPreference(uid);
     }
 
 }

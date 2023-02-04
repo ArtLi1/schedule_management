@@ -1,42 +1,28 @@
 package re;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import tgu.Schedule.ScheduleApplication;
-import tgu.Schedule.service.shiftsGenerate;
-import tgu.clwlc.FeignClient.API.dbAccessApi.forecastApi;
-import tgu.clwlc.FeignClient.pojo.mongo.forecast;
-import tgu.clwlc.FeignClient.util.DateUtils;
+import tgu.clwlc.FeignClient.API.dbAccessApi.preferenceApi;
+import tgu.clwlc.FeignClient.pojo.mongo.preferences;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
 
 
 @SpringBootTest(classes = ScheduleApplication.class)
 public class test {
 
-    @Autowired
-    shiftsGenerate shiftsGenerate;
 
     @Resource
-    forecastApi forecastApi;
+    preferenceApi preferenceApi;
+
 
     private final Long TESTSID = 50141025275905L;
 
     @Test
-    public void t1(){
-        shiftsGenerate.generate("2021-12-27",TESTSID);
-//        System.out.println(DateFormat.getFirstDayOfWeek("2022-1-1"));
-
-    }
-
-    @Test
-    public void t2(){
-        List<forecast> forecastData = forecastApi.getForecastData("2021-12-27", TESTSID);
-        Date date = forecastData.get(0).getDate();
-        System.out.println(DateUtils.ToString(date));
+    public void t3(){
+        preferences preferences = new preferences(1L,null,null,2333);
+        System.out.println(preferenceApi.modifyPreference(preferences));
     }
 
 }

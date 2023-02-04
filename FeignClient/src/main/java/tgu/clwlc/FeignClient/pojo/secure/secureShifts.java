@@ -32,4 +32,8 @@ public class secureShifts {
         }
     }
 
+    public secureShifts(long sid, String date) {
+        this.sid = sid;
+        this.date = date;
+    }
 }

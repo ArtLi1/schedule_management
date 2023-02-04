@@ -8,6 +8,7 @@ import tgu.clwlc.FeignClient.pojo.result;
 
 import javax.annotation.Resource;
 
+@RestController
 @RequestMapping("/preference")
 public class preferenceController {
 
@@ -19,13 +20,23 @@ public class preferenceController {
         return preferenceService.addPreference(preferences);
     }
 
-    @GetMapping("/{uid}")
-    public result getPreference(@PathVariable long uid){
-        return preferenceService.getPreference(uid);
+    @GetMapping("/uid/{uid}")
+    public result getPreferenceByUid(@PathVariable long uid){
+        return preferenceService.getPreferenceByUid(uid);
+    }
+
+    @GetMapping("/sid/{sid}")
+    public result getPreferenceBySid(@PathVariable long sid){
+        return preferenceService.getPreferenceByUid(sid);
     }
 
     @PutMapping
     public result modifyPreference(@RequestBody preferences preferences){
         return preferenceService.modifyPreference(preferences);
+    }
+
+    @DeleteMapping
+    public result delPreference(@RequestBody long uid){
+        return preferenceService.delPreference(uid);
     }
 }

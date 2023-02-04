@@ -306,7 +306,7 @@ public class shiftsGenerate {
         List<user_with_preference> users_data = new ArrayList<>();
 
         userList.forEach(user -> {
-            preferences preference = PreferenceApi.getPreference(user.getId());
+            preferences preference = PreferenceApi.getPreferenceByUid(user.getId());
             users_data.add(new user_with_preference(user, preference));
         });
         return users_data;

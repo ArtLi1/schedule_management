@@ -7,6 +7,7 @@ import tgu.clwlc.FeignClient.pojo.mongo.preferences;
 import tgu.clwlc.FeignClient.pojo.result;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class preferenceServiceImpl implements preferenceService {
@@ -21,12 +22,19 @@ public class preferenceServiceImpl implements preferenceService {
     }
 
     @Override
-    public result getPreference(long uid) {
-        preferences preference = preferenceApi.getPreference(uid);
+    public result getPreferenceByUid(long uid) {
+        preferences preference = preferenceApi.getPreferenceByUid(uid);
         if(preference==null){
             return result.fail("偏好不存在");
         }
         return result.success(preference);
+    }
+
+    @Override
+    public result getPreferenceBySid(long sid) {
+        List<preferences> preferenceBySid = preferenceApi.getPreferenceBySid(sid);
+        if(preferenceBySid==null) return result.fail("查询失败");
+        return result.success(preferenceBySid);
     }
 
     @Override
@@ -37,5 +45,11 @@ public class preferenceServiceImpl implements preferenceService {
         }else {
             return result.fail("更新失败");
         }
+    }
+
+    @Override
+    public result delPreference(long uid) {
+        boolean b = preferenceApi.delPreference(uid);
+        return result.State(b);
     }
 }

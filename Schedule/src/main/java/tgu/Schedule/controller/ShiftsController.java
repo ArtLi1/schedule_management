@@ -4,6 +4,7 @@ package tgu.Schedule.controller;
 import org.springframework.web.bind.annotation.*;
 import tgu.Schedule.service.Interface.shiftsService;
 import tgu.clwlc.FeignClient.pojo.result;
+import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -22,6 +23,10 @@ public class ShiftsController {
         return shiftsService.getShifts(date,sid);
     }
 
+    @DeleteMapping
+    public result delShifts(@RequestHeader long sid,@RequestHeader String date){
+        return shiftsService.delShifts(sid,date);
+    }
 
 
 }
