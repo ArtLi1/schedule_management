@@ -23,7 +23,7 @@ public class ShiftsController {
     }
 
     @PutMapping
-    public void addShifts(@RequestBody List<secureShifts> shifts){
+    public void addShifts(@RequestBody secureShifts shifts){
       shiftsService.addShifts(shifts);
     }
 

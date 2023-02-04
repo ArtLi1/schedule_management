@@ -10,7 +10,7 @@ public interface shiftsService {
 
     public secureShifts getShifts(long sid, String date);
 
-    public void addShifts(List<secureShifts> shifts);
+    public void addShifts(secureShifts shifts);
 
     public boolean delShifts(long sid, String list);
 
