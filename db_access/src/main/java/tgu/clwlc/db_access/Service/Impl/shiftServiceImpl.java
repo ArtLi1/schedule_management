@@ -50,10 +50,8 @@ public class shiftServiceImpl implements shiftsService {
     }
 
     @Override
-    public void addShifts(List<secureShifts> shifts) {
-        for (secureShifts shift : shifts) {
-            mongoTemplate.insert(shift);
-        }
+    public void addShifts(secureShifts shifts) {
+            mongoTemplate.insert(shifts);
     }
 
     @Override
