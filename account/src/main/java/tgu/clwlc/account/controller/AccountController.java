@@ -1,13 +1,17 @@
 package tgu.clwlc.account.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import tgu.clwlc.account.common.Result;
 import tgu.clwlc.account.entity.User;
 import tgu.clwlc.account.service.AccountService;
+
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -80,6 +84,39 @@ public class AccountController {
         Long userId=(Long) request.getSession().getAttribute("user");
         accountService.updateById(user);
         return Result.success("员工信息修改成功");
+    }
+
+    /**
+     * 新增用户（员工）
+     * @param user
+     * @return
+     */
+    @PostMapping
+    public Result<String> save(@RequestBody User user){
+        //设置初始密码，md5加密处理
+        user.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        accountService.save(user);
+        return Result.success("新增用户成功");
+    }
+
+    /**
+     * 用户信息分页查询
+     * @param page
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    @GetMapping("/page")
+    public Result<Page> page(int page, int pageSize, String name){
+        //构造分页构造器
+        Page pageInfo=new Page(page,pageSize);
+        //构造条件构造器
+        LambdaQueryWrapper<User> queryWrapper=new LambdaQueryWrapper<>();
+        //添加一个过滤条件
+        queryWrapper.like(name!=null,User::getName,name);
+        //执行查询
+        accountService.page(pageInfo,queryWrapper);
+        return Result.success(pageInfo);
     }
 
 
