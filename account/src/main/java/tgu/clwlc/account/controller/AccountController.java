@@ -14,11 +14,15 @@ import tgu.clwlc.account.service.AccountService;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Random;
 
 @Slf4j
 @RestController
 @RequestMapping("/account")
 public class AccountController {
+    private String code="";
+    private Random r=new Random();
+    private String phoneNumber;
     @Autowired
     private AccountService accountService;
 
@@ -95,8 +99,17 @@ public class AccountController {
     public Result<String> save(@RequestBody User user){
         //设置初始密码，md5加密处理
         user.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        accountService.save(user);
-        return Result.success("新增用户成功");
+        //2 根据页面提交的手机号phone查询数据库
+        LambdaQueryWrapper<User> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getPhone,user.getPhone());
+        User user1 = accountService.getOne(queryWrapper);
+        //如果手机号对应用户已存在，则新增失败
+        if(user1!=null){
+            return Result.error("该手机号已存在用户");
+        }else{
+            accountService.save(user);
+            return Result.success("新增用户成功");
+        }
     }
 
     /**
@@ -117,6 +130,54 @@ public class AccountController {
         //执行查询
         accountService.page(pageInfo,queryWrapper);
         return Result.success(pageInfo);
+    }
+
+    /**
+     * 获取验证码
+     * @return
+     */
+    @GetMapping("/code")
+    public Result<String> identifiedCode(String phone){
+        code="";
+        phoneNumber=phone;
+        //生成验证码
+        for (int i = 0; i < 6; i++) {
+            int num= r.nextInt(10);
+            code+=num;
+        }
+        log.info(code);
+        return Result.success("发送验证码成功");
+    }
+
+    /**
+     * 比对发来的验证码是否一致
+     * @param
+     * @return
+     */
+    @PostMapping("/compare")
+    public Result<String> compareCode(String inputCode){
+        log.info(inputCode);
+        if(code.equals(inputCode)){
+            return Result.success("验证成功");
+        }else{
+            return Result.error("验证码输入错误");
+        }
+    }
+
+    /**
+     * 修改密码
+     * @param password
+     * @return
+     */
+    @PutMapping("/password")
+    public Result<String> changePassword(String password){
+        password=DigestUtils.md5DigestAsHex(password.getBytes());
+        LambdaQueryWrapper<User> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getPhone,phoneNumber);
+        User user = accountService.getOne(queryWrapper);
+        user.setPassword(password);
+        accountService.updateById(user);
+        return Result.success("修改密码成功");
     }
 
 
