@@ -8,6 +8,7 @@ public class Askforleave {
     private Date end;
     private String reason;
     private int status;
+    private int uid;
 
     public int getId() {
         return id;
@@ -49,6 +50,15 @@ public class Askforleave {
         this.status = status;
     }
 
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+
     @Override
     public String toString() {
         return "Askforleave{" +
@@ -57,6 +67,7 @@ public class Askforleave {
                 ", end=" + end +
                 ", reason='" + reason + '\'' +
                 ", status=" + status +
+                ", uid=" + uid +
                 '}';
     }
 }
