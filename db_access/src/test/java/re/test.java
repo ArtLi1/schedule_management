@@ -6,12 +6,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import tgu.clwlc.FeignClient.pojo.mongo.forecast;
 import tgu.clwlc.FeignClient.pojo.mongo.forecast_data;
+import tgu.clwlc.FeignClient.pojo.mongo.preferences;
 import tgu.clwlc.FeignClient.util.SnowflakeIdGenerate;
 import tgu.clwlc.db_access.Controller.ForecastController;
 import tgu.clwlc.db_access.Controller.ShiftsController;
 import tgu.clwlc.db_access.Controller.UserController;
+import tgu.clwlc.db_access.Utils.MongoUtils;
 import tgu.clwlc.db_access.dbAccessApplication;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,9 @@ public class test {
     UserController userController;
 
     SnowflakeIdGenerate idGenerate = new SnowflakeIdGenerate(888);
+
+    @Resource
+    MongoUtils mongoUtils;
 
     private final Long TESTSID = 50141025275905L;
 
@@ -123,7 +129,8 @@ public class test {
         }
     }
     @Test
-    public void t2() {
-        System.out.println(shiftsController.getShifts(TESTSID, "2021-12-27"));
+    public void t2() throws IllegalAccessException {
+        preferences preferences = new preferences(6, new ArrayList<>(), null, 8888);
+        mongoUtils.remove(preferences,"uid");
     }
 }

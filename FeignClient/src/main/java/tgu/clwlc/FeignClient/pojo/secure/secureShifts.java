@@ -25,11 +25,15 @@ public class secureShifts {
 
     public secureShifts(shifts shifts){
         this.sid = shifts.getSid();
-        this.date = DateUtils.ToString(shifts.getDate());
+        this.date = shifts.getDate();
         data = new ArrayList<>();
         for (shift datum : shifts.getData()) {
             data.add(new secureShift(datum));
         }
     }
 
+    public secureShifts(long sid, String date) {
+        this.sid = sid;
+        this.date = date;
+    }
 }

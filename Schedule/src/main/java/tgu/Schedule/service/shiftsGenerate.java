@@ -3,7 +3,7 @@ package tgu.Schedule.service;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
-import tgu.clwlc.FeignClient.API.dbAccessApi;
+import tgu.clwlc.FeignClient.API.dbAccessApi.*;
 import tgu.clwlc.FeignClient.pojo.mongo.*;
 import tgu.clwlc.FeignClient.pojo.mysql.Shop;
 import tgu.clwlc.FeignClient.pojo.mysql.User;
@@ -17,12 +17,29 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class shiftsGenerate {
+
     @Resource
-    dbAccessApi dbAccessApi;
+    shopApi ShopApi;
+
+    @Resource
+    shiftsApi ShiftsApi;
+
+    @Resource
+    userApi UserApi;
+
+    @Resource
+    forecastApi ForecastApi;
+
+    @Resource
+    customRuleApi CustomRuleApi;
+
+    @Resource
+    preferenceApi PreferenceApi;
+
 
     public void generate(String date, long sid) {
 
-        Shop shop = dbAccessApi.getShop(sid);
+        Shop shop = ShopApi.getShop(sid);
 
         if (shop == null) return;
 
@@ -137,16 +154,14 @@ public class shiftsGenerate {
             rs.add(new secureShifts(shifts));
         }
         removeExistData(rs);
-        dbAccessApi.addShifts(rs);
+        ShiftsApi.addShifts(rs);
     }
 
 
     private void removeExistData(List<secureShifts> rs){
-        List<String> dates = new ArrayList<>();
         for (secureShifts r : rs) {
-            dates.add(r.getDate());
+            ShiftsApi.delShifts(r.getSid(), r.getDate());
         }
-        dbAccessApi.delShifts(rs.get(0).getSid(),dates);
     }
 
     private void lengthenAll(shifts shifts, int begin, Map<User, Double> duration, Map<User, user_with_preference> userMap, int day) {
@@ -291,7 +306,7 @@ public class shiftsGenerate {
         List<user_with_preference> users_data = new ArrayList<>();
 
         userList.forEach(user -> {
-            preferences preference = dbAccessApi.getPreference(user.getId());
+            preferences preference = PreferenceApi.getPreferenceByUid(user.getId());
             users_data.add(new user_with_preference(user, preference));
         });
         return users_data;
@@ -299,7 +314,7 @@ public class shiftsGenerate {
 
 
     private custom_rules getRules(long sid) {
-        custom_rules rules = dbAccessApi.getRules(sid);
+        custom_rules rules = CustomRuleApi.getRules(sid);
         if (rules != null) {
             return rules;
         }
@@ -311,7 +326,7 @@ public class shiftsGenerate {
         Date day = DateUtils.getFirstDayOfWeek(date);
 
         for (int i = 0; i < 7; i++) {
-            List<forecast> forecastData = dbAccessApi.getForecastData(DateUtils.ToString(day), sid);
+            List<forecast> forecastData = ForecastApi.getForecastData(DateUtils.ToString(day), sid);
             if (forecastData.size() > 0) list.add(forecastData.get(0));
             else {
                 return null;
@@ -324,7 +339,7 @@ public class shiftsGenerate {
 
 
     private List<User> getUserList(long sid) {
-        return dbAccessApi.getUserList(sid);
+        return UserApi.getUserList(sid);
     }
 
     private List<shifts> getDutyList(custom_rules rules, List<forecast> forecast, Shop shop) {

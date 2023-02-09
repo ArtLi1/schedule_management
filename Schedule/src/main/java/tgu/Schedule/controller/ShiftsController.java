@@ -1,15 +1,14 @@
 package tgu.Schedule.controller;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import tgu.Schedule.service.shiftsService;
+import org.springframework.web.bind.annotation.*;
+import tgu.Schedule.service.Interface.shiftsService;
 import tgu.clwlc.FeignClient.pojo.result;
+import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/shifts")
@@ -23,5 +22,11 @@ public class ShiftsController {
     public result getShifts(@PathVariable String date, @PathVariable long sid){
         return shiftsService.getShifts(date,sid);
     }
+
+    @DeleteMapping
+    public result delShifts(@RequestHeader long sid,@RequestHeader String date){
+        return shiftsService.delShifts(sid,date);
+    }
+
 
 }
