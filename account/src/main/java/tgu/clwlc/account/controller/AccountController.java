@@ -3,26 +3,25 @@ package tgu.clwlc.account.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
+import tgu.clwlc.FeignClient.pojo.mysql.User;
+import tgu.clwlc.FeignClient.pojo.result;
 import tgu.clwlc.account.common.Result;
-import tgu.clwlc.account.entity.User;
 import tgu.clwlc.account.service.AccountService;
-
+import tgu.clwlc.account.utils.ValidateCodeUtils;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Random;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Slf4j
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-    private String code="";
-    private Random r=new Random();
-    private String phoneNumber;
+
     @Autowired
     private AccountService accountService;
 
@@ -30,7 +29,7 @@ public class AccountController {
      * 用户登陆
      */
     @PostMapping("/login")
-    public Result<User> login(HttpServletRequest request, @RequestBody User user){
+    public result login(HttpServletRequest request, @RequestBody User user){
         //1 将页面提交的密码password进行md5加密处理
         String password= user.getPassword();
         password= DigestUtils.md5DigestAsHex(password.getBytes());
@@ -40,25 +39,25 @@ public class AccountController {
         User user1 = accountService.getOne(queryWrapper);
         //3 如果没有查询到则返回登陆失败结果
         if(user1==null){
-            return Result.error("用户不存在");
+            return result.fail("用户不存在");
         }
         //4 密码比对，如果不一致则返回登陆失败结果
         if(!user1.getPassword().equals(password)){
-            return Result.error("密码或用户名错误");
+            return result.fail("密码或用户名错误");
         }
         //5 登陆成功，将用户ID存入Session并返回登陆成功结果
         request.getSession().setAttribute("user",user1.getId());
-        return Result.success(user1);
+        return result.success(user1);
     }
 
     /**
      * 用户退出登陆
      */
     @PostMapping("/logout")
-    public Result<String> logout(HttpServletRequest request){
+    public result logout(HttpServletRequest request){
         //清理session中保存的当前登陆用户的id
         request.getSession().removeAttribute("user");
-        return Result.success("退出成功");
+        return result.success("退出成功");
 
     }
 
@@ -68,12 +67,12 @@ public class AccountController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result<User> getById(@PathVariable Long id){
+    public result getById(@PathVariable Long id){
         User user = accountService.getById(id);
         if(user!=null){
-            return Result.success(user);
+            return result.success(user);
         }
-        return Result.error("没有查询到对应用户信息");
+        return result.fail("没有查询到对应用户信息");
     }
 
     /**
@@ -83,11 +82,11 @@ public class AccountController {
      * @return
      */
     @PutMapping
-    public Result<String> update(HttpServletRequest request,@RequestBody User user){
+    public result update(HttpServletRequest request,@RequestBody User user){
         log.info(user.toString());
         Long userId=(Long) request.getSession().getAttribute("user");
         accountService.updateById(user);
-        return Result.success("员工信息修改成功");
+        return result.success("员工信息修改成功");
     }
 
     /**
@@ -96,7 +95,8 @@ public class AccountController {
      * @return
      */
     @PostMapping
-    public Result<String> save(@RequestBody User user){
+    public result save(@RequestBody User user){
+        log.info("新增用户信息：{}",user.toString());
         //设置初始密码，md5加密处理
         user.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
         //2 根据页面提交的手机号phone查询数据库
@@ -105,10 +105,10 @@ public class AccountController {
         User user1 = accountService.getOne(queryWrapper);
         //如果手机号对应用户已存在，则新增失败
         if(user1!=null){
-            return Result.error("该手机号已存在用户");
+            return result.fail("该手机号已存在用户");
         }else{
             accountService.save(user);
-            return Result.success("新增用户成功");
+            return result.success("新增用户成功");
         }
     }
 
@@ -120,7 +120,7 @@ public class AccountController {
      * @return
      */
     @GetMapping("/page")
-    public Result<Page> page(int page, int pageSize, String name){
+    public result page(int page, int pageSize, String name){
         //构造分页构造器
         Page pageInfo=new Page(page,pageSize);
         //构造条件构造器
@@ -129,56 +129,70 @@ public class AccountController {
         queryWrapper.like(name!=null,User::getName,name);
         //执行查询
         accountService.page(pageInfo,queryWrapper);
-        return Result.success(pageInfo);
+        return result.success(pageInfo);
     }
 
     /**
-     * 获取验证码
+     * 发送手机短信验证码
+     * @param user
+     * @param session
      * @return
      */
-    @GetMapping("/code")
-    public Result<String> identifiedCode(String phone){
-        code="";
-        phoneNumber=phone;
-        //生成验证码
-        for (int i = 0; i < 6; i++) {
-            int num= r.nextInt(10);
-            code+=num;
+    @PostMapping("/sendMsg")
+    public result sendMsg(@RequestBody User user, HttpSession session){
+        //获取手机号
+        Long phone = user.getPhone();
+        if(phone!=null){
+            //生成随机的6位验证码
+            String code = ValidateCodeUtils.generateValidateCode(6).toString();
+            log.info("code={}",code);
+            //需要将生成的验证码保存到session
+            session.setAttribute(phone.toString(),code);
+            return result.success("手机验证码短信发送成功");
         }
-        log.info(code);
-        return Result.success("发送验证码成功");
+        return result.fail("短信发送失败");
     }
 
     /**
-     * 比对发来的验证码是否一致
-     * @param
+     * 比对验证码是否一致,并修改密码
+     * @param map
+     * @param session
      * @return
      */
-    @PostMapping("/compare")
-    public Result<String> compareCode(String inputCode){
-        log.info(inputCode);
-        if(code.equals(inputCode)){
-            return Result.success("验证成功");
-        }else{
-            return Result.error("验证码输入错误");
-        }
-    }
-
-    /**
-     * 修改密码
-     * @param password
-     * @return
-     */
-    @PutMapping("/password")
-    public Result<String> changePassword(String password){
+    @PutMapping("/updatePwd")
+    public result updatePassword(@RequestBody Map map, HttpSession session){
+        log.info(map.toString());
+        //获取手机号
+        Long phone =(Long) map.get("phone");
+        //获取验证码
+        String code = map.get("code").toString();
+        //获取用户提交过来的密码
+        String password = map.get("password").toString();
+        //密码md5加密
         password=DigestUtils.md5DigestAsHex(password.getBytes());
-        LambdaQueryWrapper<User> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getPhone,phoneNumber);
-        User user = accountService.getOne(queryWrapper);
-        user.setPassword(password);
-        accountService.updateById(user);
-        return Result.success("修改密码成功");
+        //从session中获取保存的验证码
+        Object codeInSession = session.getAttribute(phone.toString());
+        //比对页面提交到验证码和session中保存的验证码
+        if(codeInSession!=null && codeInSession.equals(code)){
+            //比对成功
+            LambdaQueryWrapper<User> queryWrapper=new LambdaQueryWrapper<>();
+            queryWrapper.eq(User::getPhone,phone);
+            User user = accountService.getOne(queryWrapper);
+            if(user!=null){
+                user.setPassword(password);
+                accountService.updateById(user);
+                return result.success("密码修改成功");
+            }else{
+                return result.fail("该手机号用户不存在");
+            }
+
+        }else {
+            return result.fail("验证失败");
+        }
+
     }
+
+
 
 
 }
