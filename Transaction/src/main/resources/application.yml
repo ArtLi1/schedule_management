@@ -2,8 +2,11 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root
-    url: jdbc:mysql://192.168.80.128/project?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+#    password: root
+    password: lumos1989
+#    url: jdbc:mysql://192.168.80.128/project?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/clwlc?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+
 
 
   application:
@@ -17,3 +20,13 @@ spring:
 
 server:
   port: 20000
+
+mybatis-plus:
+  configuration:
+      #在映射实体或属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
+      #??address_book  -->  addressBook
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID

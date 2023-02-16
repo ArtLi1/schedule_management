@@ -24,7 +24,7 @@ public class CheckLeavingController {
 
 
     @GetMapping("/singlecheck/{uid}")
-    public result checkSingleInfo(@PathVariable int uid){
+    public result checkSingleInfo(@PathVariable Long uid){
 
         QueryWrapper<Askforleave> query = new QueryWrapper<>();
         query.eq("uid",uid);
@@ -50,7 +50,7 @@ public class CheckLeavingController {
 
     @PostMapping("/approval")
     public result approval(@RequestBody approvalData approvalData){
-        int id = approvalData.getId();
+        Long id = approvalData.getId();
         int status=approvalData.getStatus();
 
         QueryWrapper<Askforleave> query = new QueryWrapper<>();

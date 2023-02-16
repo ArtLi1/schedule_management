@@ -1,14 +1,14 @@
 package tgu.Transaction.pojo;
 
 public class approvalData {
-    private int id;
+    private Long id;
     private int status;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
