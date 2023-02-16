@@ -4,12 +4,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import tgu.clwlc.FeignClient.pojo.secure.secureShifts;
 
-import java.util.List;
-
 @FeignClient(name = "dbAccess",contextId = "shifts")
 public interface shiftsApi {
     @PutMapping("/shifts")
-    void addShifts(@RequestBody List<secureShifts> shifts);
+    void addShifts(@RequestBody secureShifts shifts);
 
     @DeleteMapping("/shifts")
     boolean delShifts(@RequestHeader long id, @RequestHeader String date);

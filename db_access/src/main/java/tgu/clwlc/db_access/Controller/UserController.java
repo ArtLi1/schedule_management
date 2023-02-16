@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tgu.clwlc.FeignClient.pojo.mysql.User;
 import tgu.clwlc.FeignClient.util.SnowflakeIdGenerate;
+import tgu.clwlc.db_access.Service.Interface.UserService;
 import tgu.clwlc.db_access.dao.UserMapper;
 
 import javax.annotation.Resource;
@@ -19,26 +20,35 @@ import java.util.List;
 public class UserController {
 
     @Resource
-    UserMapper userMapper;
+    UserService userService;
 
-    SnowflakeIdGenerate idGenerate = new SnowflakeIdGenerate(2);
+    @GetMapping("/username/{username}")
+    public User getUser(@PathVariable String username){
+        return userService.getUser(username);
+    }
 
     @GetMapping("/uid/{uid}")
     public User getUser(@PathVariable long uid){
-        return userMapper.selectById(uid);
+        return userService.getUser(uid);
     }
 
     @GetMapping("/sid/{sid}")
     public List<User> getUserList(@PathVariable long sid){
-        QueryWrapper<User> query = new QueryWrapper<>();
-        query.eq("sid",sid);
-        return userMapper.selectList(query);
+        return userService.getUserList(sid);
     }
 
     @PostMapping
-    public int addUser(@Valid @RequestBody User user){
-        user.setId(idGenerate.nextId());
-        userMapper.insert(user);
-        return 0;
+    public boolean addUser(@Valid @RequestBody User user){
+       return userService.addUser(user);
+    }
+
+    @PutMapping
+    public boolean modifyUser(@RequestBody User user){
+        return userService.modifyUser(user);
+    }
+
+    @DeleteMapping
+    public boolean removeUser(@RequestBody long uid){
+        return userService.removeUser(uid);
     }
 }

@@ -154,7 +154,9 @@ public class shiftsGenerate {
             rs.add(new secureShifts(shifts));
         }
         removeExistData(rs);
-        ShiftsApi.addShifts(rs);
+        for (secureShifts r : rs) {
+            ShiftsApi.addShifts(r);
+        }
     }
 
 

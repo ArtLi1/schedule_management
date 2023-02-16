@@ -8,10 +8,8 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import tgu.clwlc.FeignClient.pojo.mysql.User;
 import tgu.clwlc.FeignClient.pojo.result;
-//import tgu.clwlc.account.common.Result;
 import tgu.clwlc.account.service.AccountService;
 import tgu.clwlc.account.utils.ValidateCodeUtils;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

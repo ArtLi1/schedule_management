@@ -1,0 +1,30 @@
+jwt:
+  private.key: classpath:app.key
+
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]': #拦截的请求
+            allowedOrigins:       #可跨域的网站
+            allowedMethods:
+            allowedHeaders: '*' #允许携带的头信息
+            allowCredentials: true #是否允许带cookie
+            maxAge: 36000 #跨域检测的有效期
+
+      routes:
+        - id: schedule
+          uri: lb://schedule
+          predicates:
+            - Path=/schedule/**
+      default-filters:
+        - StripPrefix=1
+server:
+  port: 20030
+
+
