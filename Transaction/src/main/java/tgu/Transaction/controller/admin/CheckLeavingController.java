@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tgu.Transaction.dao.AskforleaveMapper;
-import tgu.Transaction.pojo.Askforleave;
+import tgu.clwlc.FeignClient.pojo.mysql.Askforleave;
 import tgu.Transaction.pojo.approvalData;
 import tgu.Transaction.service.AskforleaveService;
 import tgu.clwlc.FeignClient.pojo.result;

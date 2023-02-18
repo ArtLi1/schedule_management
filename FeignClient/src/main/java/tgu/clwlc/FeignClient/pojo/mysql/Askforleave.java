@@ -1,14 +1,18 @@
-package tgu.Transaction.pojo;
+package tgu.clwlc.FeignClient.pojo.mysql;
 
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 事务表
+ */
 @Data
 public class Askforleave implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    //id类型为Long,可以配合mabatisplus自动生成id
     private Long id;
     private Date start;
     private Date end;
@@ -16,6 +20,7 @@ public class Askforleave implements Serializable {
     private int status;
     private Long uid;
 
+    //category为1表示请假事务，2表示换班事务
     private int category;
     private Date afterStart;
     private Date afterEnd;

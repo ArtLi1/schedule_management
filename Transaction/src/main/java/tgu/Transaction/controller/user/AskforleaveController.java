@@ -5,16 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tgu.Transaction.common.BaseContext;
 import tgu.Transaction.dao.AskforleaveMapper;
-import tgu.Transaction.pojo.Askforleave;
+import tgu.clwlc.FeignClient.pojo.mysql.Askforleave;
 import tgu.Transaction.service.AskforleaveService;
-import tgu.clwlc.FeignClient.pojo.mysql.User;
 import tgu.clwlc.FeignClient.pojo.result;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
