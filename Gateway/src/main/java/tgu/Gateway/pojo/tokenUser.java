@@ -12,15 +12,18 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class tokenUser {
     private String username;
-    private int permission;
+    private String  permission;
 
-    public Collection<GrantedAuthority> permissionList(){
-        List<GrantedAuthority> list = new ArrayList<>();
-        list.add( new  SimpleGrantedAuthority(permission+""));
-        return list;
+    public tokenUser(String username, String  permission) {
+        this.username = username;
+        this.permission = permission;
+    }
+
+    public Collection<GrantedAuthority> permission(){
+        Collection<GrantedAuthority> collection = new ArrayList<>();
+        collection.add(new SimpleGrantedAuthority(permission));
+        return collection;
     }
 }

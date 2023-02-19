@@ -17,6 +17,7 @@ public class JWTGenerate {
     private final static long Expires = 60*60*1000;
 
 
+
     public String getTokenString(String authorization){
         if (!StringUtils.hasText(authorization)) {
             return null;
@@ -40,13 +41,17 @@ public class JWTGenerate {
     @Value("${jwt.private.key}")
     private String  privateKey;
 
-    public Algorithm HMAC256(){
+    private Algorithm HMAC256(){
         return Algorithm.HMAC256(privateKey);
     }
 
-    public String getToken(Object user){
+    public String getToken(Object user,Long Expires){
         return JWT.create().withSubject(ObjectToString(user)).withExpiresAt(new Date(System.currentTimeMillis() + Expires))
                 .sign(HMAC256());
+    }
+
+    public String getToken(Object user){
+        return getToken(user,Expires);
     }
 
     public boolean verifier(String token){
