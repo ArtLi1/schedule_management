@@ -1,4 +1,4 @@
-package tgu.Gateway.security.conf;
+package tgu.Gateway.Utils;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -25,9 +25,6 @@ public class PassWordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        System.out.println(rawPassword);
-        System.out.println(encodedPassword);
-        System.out.println(encode(rawPassword));
         return encode(rawPassword).equals(encodedPassword);
     }
 }

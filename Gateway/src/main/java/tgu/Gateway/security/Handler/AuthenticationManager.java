@@ -8,13 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import tgu.Gateway.pojo.SecurityUser;
-import tgu.Gateway.security.conf.PassWordEncoder;
+import tgu.Gateway.Utils.PassWordEncoder;
 import tgu.Gateway.security.conf.UserDetailsService;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Component
 @AllArgsConstructor
