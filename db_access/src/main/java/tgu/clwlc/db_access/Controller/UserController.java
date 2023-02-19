@@ -12,7 +12,6 @@ import tgu.clwlc.db_access.dao.UserMapper;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.sql.Wrapper;
 import java.util.List;
 
 @RestController

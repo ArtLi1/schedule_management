@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
-    url: jdbc:mysql://192.168.220.1:3306/clwlc?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    password: root
+    url: jdbc:mysql://192.168.80.128/clwlc?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
   data:
     mongodb:
       uri: mongodb://clwlc:123456@192.168.220.1:27020/clwlc
