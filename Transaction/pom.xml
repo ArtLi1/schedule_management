@@ -44,6 +44,13 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.0.31</version>
         </dependency>
+        <!--        swagger-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
     </dependencies>
 
 
