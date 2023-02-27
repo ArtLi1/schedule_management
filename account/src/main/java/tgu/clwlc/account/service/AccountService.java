@@ -1,7 +1,10 @@
 package tgu.clwlc.account.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import tgu.clwlc.FeignClient.pojo.mysql.User;
+import tgu.clwlc.FeignClient.pojo.result;
 
-public interface AccountService extends IService<User> {
+public interface AccountService  {
+    result sign(User user);
+
+    result page(int page, int pageSize, String name);
 }

@@ -10,11 +10,14 @@ import java.util.List;
 @FeignClient(name = "dbAccess",contextId = "user")
 public interface userApi {
 
-    @GetMapping("/user/username/{username}")
-    User getUser(@PathVariable String username);
-
     @GetMapping("/user/uid/{uid}")
-    User getUser(@PathVariable long uid);
+    User getUserByUid(@PathVariable long uid);
+
+    @GetMapping("/user/email/{email}")
+    User getUserByEmail(@PathVariable String email);
+
+    @GetMapping("/user/phone/{phone}")
+    User getUserByPhone(@PathVariable long phone);
 
     @GetMapping("/user/sid/{sid}")
     List<User> getUserList(@PathVariable long sid);

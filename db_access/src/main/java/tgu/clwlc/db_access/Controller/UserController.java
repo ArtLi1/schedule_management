@@ -21,13 +21,19 @@ public class UserController {
     @Resource
     UserService userService;
 
-    @GetMapping("/username/{username}")
-    public User getUser(@PathVariable String username){
-        return userService.getUser(username);
+    @GetMapping("/email/{email}")
+    public User getUserByEmail(@PathVariable String email){
+        return userService.getUserByEmail(email);
     }
 
+    @GetMapping("/phone/{phone}")
+    public User getUserByPhone(@PathVariable long phone){
+        return userService.getUserByPhone(phone);
+    }
+
+
     @GetMapping("/uid/{uid}")
-    public User getUser(@PathVariable long uid){
+    public User getUserByUid(@PathVariable long uid){
         return userService.getUser(uid);
     }
 

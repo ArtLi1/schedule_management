@@ -1,4 +1,4 @@
-package tgu.Gateway.security.Filters;
+package tgu.Gateway.security.Handler;
 
 import com.alibaba.fastjson2.JSON;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -16,6 +16,7 @@ import tgu.clwlc.FeignClient.pojo.result;
 
 import javax.annotation.Resource;
 import java.time.Duration;
+import java.util.ArrayList;
 
 @Component
 public class AuthenticationSuccess extends WebFilterChainServerAuthenticationSuccessHandler {
@@ -34,8 +35,8 @@ public class AuthenticationSuccess extends WebFilterChainServerAuthenticationSuc
         headers.add("Content-Type","application/json; charset=UTF-8");
         headers.add("Cache-Control","no-store, no-cache, must-revalidate, max-age=0");
 
-        tokenUser user = new tokenUser((String) authentication.getPrincipal(),"");
-        authentication.getAuthorities().forEach(s->user.setPermission(s.getAuthority()));
+        tokenUser user = new tokenUser((String) authentication.getPrincipal(),new ArrayList<>());
+        authentication.getAuthorities().forEach(s->user.addPermission(s.getAuthority()));
         String token = jwt.getToken(user);
         response.addCookie(ResponseCookie.from("token",token).maxAge(Duration.ofDays(day)).path("/").build());
 

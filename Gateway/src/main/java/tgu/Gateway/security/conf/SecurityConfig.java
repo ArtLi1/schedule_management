@@ -10,15 +10,13 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Mono;
-import tgu.Gateway.security.Filters.AuthenticationFailed;
-import tgu.Gateway.security.Filters.AuthenticationSuccess;
+import tgu.Gateway.security.Handler.*;
 import tgu.Gateway.security.Filters.CookieToHeadersFilter;
 import tgu.Gateway.security.Filters.SecurityTokenRepository;
-import tgu.Gateway.security.Handler.AccessDeniedHandler;
-import tgu.Gateway.security.Handler.AuthenticationEntrypoint;
-import tgu.Gateway.security.Handler.AuthenticationManager;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -39,9 +37,7 @@ public class SecurityConfig {
 
     private AuthenticationManager authenticationManager;
 
-    private static final String[] s1 = {"/schedule/**","/t1/**"};
-    private static final String[] s2 = {"/t2/**"};
-    private static final String[] s3 = {"/t3/**"};
+    private LogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
@@ -49,18 +45,8 @@ public class SecurityConfig {
         http.addFilterBefore(cookieToHeadersFilter,SecurityWebFiltersOrder.HTTP_HEADERS_WRITER);
 
         //权限控制
-        http.authorizeExchange()
-                .pathMatchers("/auth/login", "/auth/signup").permitAll()
-                .pathMatchers("/v3/api-docs/**", "/swagger-resources/configuration/ui",
-                        "/swagger-resources", "/swagger-resources/configuration/security",
-                        "/swagger-ui.html", "/css/**", "/js/**", "/images/**", "/webjars/**", "**/favicon.ico", "/index").permitAll()
+        Authentication(http);
 
-                .pathMatchers("/schedule/**","/t1/**").hasAnyAuthority("1")
-
-                .pathMatchers("/t2/**").hasAnyAuthority("2")
-
-                .pathMatchers("/t3/**").hasAnyAuthority("3")
-                .anyExchange().authenticated();
 
         //登录逻辑控制
         return http
@@ -70,11 +56,34 @@ public class SecurityConfig {
                 .and().exceptionHandling().authenticationEntryPoint(authenticationEntrypoint)
                 .accessDeniedHandler(accessDeniedHandler)
                 .and().authenticationManager(reactiveAuthenticationManager())
+                .securityContextRepository(securityTokenRepository)
+
                 .httpBasic().disable()
                 .csrf().disable()
-                .securityContextRepository(securityTokenRepository)
+                .logout().logoutUrl("/auth/logout")
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .and()
                 .build();
     }
+
+    public void Authentication(ServerHttpSecurity http) {
+        http.authorizeExchange(authorize -> {
+            authorize.pathMatchers("/auth/login", "/auth/signup").permitAll()
+                    .pathMatchers("/v3/api-docs/**", "/swagger-resources/configuration/ui",
+                            "/swagger-resources", "/swagger-resources/configuration/security",
+                            "/swagger-ui.html", "/css/**", "/js/**", "/images/**", "/webjars/**", "**/favicon.ico", "/index").permitAll();
+
+            getMap().forEach((k,v)->authorize.pathMatchers(k).hasAuthority(v));
+
+            authorize.anyExchange().denyAll();
+        });
+    }
+
+    public Map<String, String> getMap(){
+        Map<String, String> map = new HashMap<>();
+        return map;
+    }
+
 
     public ReactiveAuthenticationManager reactiveAuthenticationManager() {
         LinkedList<ReactiveAuthenticationManager> managers = new LinkedList<>();
@@ -83,7 +92,6 @@ public class SecurityConfig {
             return Mono.empty();
         });
         managers.add(authenticationManager);
-//        managers.add(new UserDetailsRepositoryReactiveAuthenticationManager(null));
         return new DelegatingReactiveAuthenticationManager(managers);
     }
 

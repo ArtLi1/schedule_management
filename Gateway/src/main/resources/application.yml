@@ -26,5 +26,3 @@ spring:
         - StripPrefix=1
 server:
   port: 20030
-debug: true
-

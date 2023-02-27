@@ -1,10 +1,9 @@
 package tgu.Gateway.pojo;
 
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import tgu.clwlc.FeignClient.pojo.mysql.User;
+import tgu.clwlc.FeignClient.pojo.mysql.UserWithP;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,15 +15,15 @@ public class SecurityUser implements UserDetails {
 
     private final String password;
 
-    private final String  permission;
+    private final List<String> permission;
 
-    public SecurityUser(User user){
+    public SecurityUser(UserWithP user){
         username = user.getEmail();
         password = user.getPassword();
-        permission = String.valueOf(user.getPermission());
+        permission = user.getPermission();
     }
 
-    public SecurityUser(String username, String password, String  permission) {
+    public SecurityUser(String username, String password, List<String> permission) {
         this.username = username;
         this.password = password;
         this.permission = permission;
@@ -33,7 +32,7 @@ public class SecurityUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<>();
-        list.add( new SimpleGrantedAuthority(permission+""));
+        permission.forEach(p->list.add(new SimpleGrantedAuthority(p)));
         return list;
     }
 

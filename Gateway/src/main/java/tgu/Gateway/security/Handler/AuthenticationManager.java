@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import tgu.Gateway.Utils.PassWordEncoder;
+import tgu.clwlc.FeignClient.util.PassWordEncoder;
 import tgu.Gateway.security.conf.UserDetailsService;
 
 @Component

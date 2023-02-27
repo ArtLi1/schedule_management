@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface UserService {
 
-    User getUser(String username);
     User getUser(long uid);
 
     List<User> getUserList(long sid);
@@ -17,4 +16,8 @@ public interface UserService {
     boolean modifyUser(User user);
 
     boolean removeUser(long uid);
+
+    User getUserByEmail(String email);
+
+    User getUserByPhone(long phone);
 }

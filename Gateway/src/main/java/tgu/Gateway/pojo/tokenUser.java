@@ -14,16 +14,20 @@ import java.util.List;
 @Data
 public class tokenUser {
     private String username;
-    private String  permission;
+    private List<String> permission;
 
-    public tokenUser(String username, String  permission) {
+    public tokenUser(String username, List<String> permission) {
         this.username = username;
         this.permission = permission;
     }
 
     public Collection<GrantedAuthority> permission(){
         Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add(new SimpleGrantedAuthority(permission));
+        permission.forEach(p->collection.add(new SimpleGrantedAuthority(p)));
         return collection;
     }
+    public void addPermission(String permission){
+        this.permission.add(permission);
+    }
+
 }

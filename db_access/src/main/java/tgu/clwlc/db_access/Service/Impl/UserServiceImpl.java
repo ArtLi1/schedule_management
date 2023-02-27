@@ -21,13 +21,18 @@ public class UserServiceImpl implements UserService {
     SnowflakeIdGenerate idGenerate = new SnowflakeIdGenerate(2);
 
     @Override
-    public User getUser(String username) {
-        return userMapper.selectOne(Wrappers.lambdaQuery(User.class).eq(User::getEmail, username));
+    public User getUser(long uid) {
+        return userMapper.selectById(uid);
     }
 
     @Override
-    public User getUser(long uid) {
-        return userMapper.selectById(uid);
+    public User getUserByEmail(String email) {
+        return userMapper.selectOne(Wrappers.lambdaQuery(User.class).eq(User::getEmail,email));
+    }
+
+    @Override
+    public User getUserByPhone(long phone) {
+        return userMapper.selectOne(Wrappers.lambdaQuery(User.class).eq(User::getPhone,phone));
     }
 
     @Override
@@ -39,8 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addUser(User user) {
-        User user1 = getUser(user.getEmail());
-        if(user1!=null){
+        if(getUserByEmail(user.getEmail())!=null||getUserByPhone(user.getPhone())!=null){
             return false;
         }
         user.setId(idGenerate.nextId());

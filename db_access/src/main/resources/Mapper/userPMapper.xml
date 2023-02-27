@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tgu.clwlc.db_access.dao.UserPMapper">
+
+    <resultMap id="UserP" type="tgu.clwlc.FeignClient.pojo.mysql.UserWithP">
+        <id property="id" column="id"/>
+        <collection property="permission" column="id" ofType="String" select="selectPermission"/>
+    </resultMap>
+
+    <select id="selectPermission" resultType="String">
+        select p.pName from user_p up,permission p where up.uid = #{uid} and up.pid = p.pid
+    </select>
+
+    <select id="selectByUid" resultMap="UserP">
+        SELECT u.id,u.name,u.email,u.job,u.sid,u.`password`,u.phone,r.rName role
+        from `user` u,user_r ur,role r
+        where u.id = ur.uid and ur.rid = r.rid and uid = #{uid}
+    </select>
+
+    <select id="selectByEmail" resultMap="UserP">
+        SELECT u.id,u.name,u.email,u.job,u.sid,u.`password`,u.phone,r.rName role
+        from `user` u,user_r ur,role r
+        where u.id = ur.uid and ur.rid = r.rid and email = #{email}
+    </select>
+    <select id="selectByPhone" resultType="tgu.clwlc.FeignClient.pojo.mysql.UserWithP">
+        SELECT u.id,u.name,u.email,u.job,u.sid,u.`password`,u.phone,r.rName role
+        from `user` u,user_r ur,role r
+        where u.id = ur.uid and ur.rid = r.rid and phone = #{phone}
+    </select>
+</mapper>
