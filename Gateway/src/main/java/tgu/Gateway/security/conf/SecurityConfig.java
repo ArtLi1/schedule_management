@@ -3,6 +3,7 @@ package tgu.Gateway.security.conf;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.DelegatingReactiveAuthenticationManager;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -10,6 +11,7 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Mono;
+import tgu.Gateway.Utils.PermissionUtils;
 import tgu.Gateway.security.Handler.*;
 import tgu.Gateway.security.Filters.CookieToHeadersFilter;
 import tgu.Gateway.security.Filters.SecurityTokenRepository;
@@ -38,6 +40,8 @@ public class SecurityConfig {
     private AuthenticationManager authenticationManager;
 
     private LogoutSuccessHandler logoutSuccessHandler;
+
+    private PermissionUtils permissionUtils;
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
@@ -68,20 +72,18 @@ public class SecurityConfig {
 
     public void Authentication(ServerHttpSecurity http) {
         http.authorizeExchange(authorize -> {
-            authorize.pathMatchers("/auth/login", "/auth/signup").permitAll()
+            authorize.pathMatchers("/auth/login", "/account/sign").permitAll()
                     .pathMatchers("/v3/api-docs/**", "/swagger-resources/configuration/ui",
                             "/swagger-resources", "/swagger-resources/configuration/security",
                             "/swagger-ui.html", "/css/**", "/js/**", "/images/**", "/webjars/**", "**/favicon.ico", "/index").permitAll();
 
             getMap().forEach((k,v)->authorize.pathMatchers(k).hasAuthority(v));
-
             authorize.anyExchange().denyAll();
         });
     }
 
     public Map<String, String> getMap(){
-        Map<String, String> map = new HashMap<>();
-        return map;
+        return permissionUtils.getPermissionList();
     }
 
 

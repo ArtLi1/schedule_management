@@ -3,7 +3,7 @@ package tgu.Gateway.pojo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import tgu.clwlc.FeignClient.pojo.mysql.UserWithP;
+import tgu.clwlc.FeignClient.pojo.mysql.Permission.UserWithP;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,6 +32,7 @@ public class SecurityUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<>();
+        if(permission==null) return list;
         permission.forEach(p->list.add(new SimpleGrantedAuthority(p)));
         return list;
     }

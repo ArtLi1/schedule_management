@@ -31,7 +31,7 @@ public class shifts {
     }
 
     public static shifts emptyShiftsGenerator(forecast forecast, custom_rules rule, double size){
-        shifts s = new shifts(forecast.getSid(), DateUtils.ToString(forecast.getDate()));
+        shifts s = new shifts(forecast.getSid(), forecast.getDate());
 
         int day = DateUtils.getWeekOfDate(forecast.getDate());
         int start = day<6?9:10;

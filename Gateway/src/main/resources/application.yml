@@ -18,10 +18,27 @@ spring:
             maxAge: 36000 #跨域检测的有效期
 
       routes:
+        - id: account
+          uri: lb://account
+          predicates:
+            - Path=/account/**
+
+        - id: inform
+          uri: lb://inform
+          predicates:
+            - Path=/inform/**
+
         - id: schedule
           uri: lb://schedule
           predicates:
             - Path=/schedule/**
+
+        - id: transaction
+          uri: lb://transaction
+          predicates:
+            - Path=/transaction/**
+
+
       default-filters:
         - StripPrefix=1
 server:

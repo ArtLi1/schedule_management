@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tgu.clwlc.db_access.dao.UserWithPMapper">
+
+    <sql id="selectUserWithP">
+        SELECT u.sid sid,u.id uid,u.`name` name, u.email email,u.job job,u.phone phone,r.rName,u.password password
+        FROM (SELECT
+        *
+        from `user` u LEFT JOIN user_r ur
+        on u.id = ur.uid
+        where ${type} = ${value}
+        ) u
+        LEFT JOIN role r
+        ON r.rid = u.rid
+    </sql>
+
+    <resultMap id="UserP" type="tgu.clwlc.FeignClient.pojo.mysql.Permission.UserWithP">
+        <id property="id" column="id"/>
+        <collection property="permission" column="id" ofType="String" select="selectPermission"/>
+    </resultMap>
+
+
+    <select id="selectPermission" resultType="String">
+        select p.pName from user_p up,permission p where up.uid = #{uid} and up.pid = p.pid
+    </select>
+
+    <select id="selectByUid" resultMap="UserP">
+        <include refid="selectUserWithP">
+            <property name="type" value="uid"/>
+            <property name="value" value="#{uid}"/>
+        </include>
+    </select>
+
+    <select id="selectByEmail" resultMap="UserP">
+        <include refid="selectUserWithP">
+            <property name="type" value="email"/>
+            <property name="value" value="#{email}"/>
+        </include>
+    </select>
+
+    <select id="selectByPhone" resultType="tgu.clwlc.FeignClient.pojo.mysql.Permission.UserWithP">
+        <include refid="selectUserWithP">
+            <property name="type" value="phone"/>
+            <property name="value" value="#{phone}"/>
+        </include>
+    </select>
+</mapper>

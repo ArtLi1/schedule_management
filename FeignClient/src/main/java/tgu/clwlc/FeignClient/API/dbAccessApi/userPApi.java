@@ -3,7 +3,7 @@ package tgu.clwlc.FeignClient.API.dbAccessApi;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import tgu.clwlc.FeignClient.pojo.mysql.UserWithP;
+import tgu.clwlc.FeignClient.pojo.mysql.Permission.UserWithP;
 
 @FeignClient(name = "dbAccess",contextId = "UserP")
 public interface userPApi {

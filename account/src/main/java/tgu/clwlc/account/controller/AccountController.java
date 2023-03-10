@@ -1,9 +1,6 @@
 package tgu.clwlc.account.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tgu.clwlc.FeignClient.pojo.mysql.User;
 import tgu.clwlc.FeignClient.pojo.result;
@@ -13,7 +10,7 @@ import javax.annotation.Resource;
 
 @Slf4j
 @RestController
-@RequestMapping("/account")
+@RequestMapping
 public class AccountController {
 
     @Resource
@@ -24,7 +21,7 @@ public class AccountController {
      * @param user
      * @return
      */
-    @PostMapping
+    @PostMapping("/sign")
     public result sign(@RequestBody User user){
         return accountService.sign(user);
     }

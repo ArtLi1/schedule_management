@@ -13,15 +13,15 @@ import java.util.List;
 @Data
 public class forecast {
     private long sid;
-    private Date date;
+    private String  date;
 
     private List<forecast_data> data;
 
     public void setDate(String date) {
-        this.date = DateUtils.ToDate(date);
+        this.date = date;
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = DateUtils.ToString(date);
     }
 }

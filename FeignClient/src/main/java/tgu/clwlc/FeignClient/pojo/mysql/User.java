@@ -16,15 +16,14 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    //原本id类型是long，改为Long后，可以配合mybatisPlus实现自动生成id
     private Long id;
-    @NotBlank
+
     private long sid;
     @NotBlank
     private String name;
     @Email
     private String email;
-    @NotBlank
+
     private int job;
 
     private long phone;

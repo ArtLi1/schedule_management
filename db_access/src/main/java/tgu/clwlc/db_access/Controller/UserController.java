@@ -1,14 +1,9 @@
 package tgu.clwlc.db_access.Controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tgu.clwlc.FeignClient.pojo.mysql.User;
-import tgu.clwlc.FeignClient.util.SnowflakeIdGenerate;
 import tgu.clwlc.db_access.Service.Interface.UserService;
-import tgu.clwlc.db_access.dao.UserMapper;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;

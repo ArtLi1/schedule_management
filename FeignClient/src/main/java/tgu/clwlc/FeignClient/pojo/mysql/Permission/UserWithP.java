@@ -1,4 +1,4 @@
-package tgu.clwlc.FeignClient.pojo.mysql;
+package tgu.clwlc.FeignClient.pojo.mysql.Permission;
 
 import lombok.Data;
 

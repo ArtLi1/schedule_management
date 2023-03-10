@@ -9,6 +9,12 @@ import java.util.GregorianCalendar;
 public class DateUtils {
     static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+    public static Date getMongoDate(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY,+8);
+        return calendar.getTime();
+    }
 
     public static Date ToDate(String str){
         try {

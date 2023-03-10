@@ -4,10 +4,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import tgu.Gateway.pojo.SecurityUser;
-import tgu.clwlc.FeignClient.API.dbAccessApi.userApi;
 import tgu.clwlc.FeignClient.API.dbAccessApi.userPApi;
-import tgu.clwlc.FeignClient.pojo.mysql.User;
-import tgu.clwlc.FeignClient.pojo.mysql.UserWithP;
+import tgu.clwlc.FeignClient.pojo.mysql.Permission.UserWithP;
 
 import javax.annotation.Resource;
 import java.util.concurrent.ExecutionException;

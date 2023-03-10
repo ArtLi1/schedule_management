@@ -2,12 +2,19 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
-    url: jdbc:mysql://192.168.220.1/clwlc?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    password: 123456a
+    url: jdbc:mysql://192.168.220.129/clwlc?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+
+
   data:
     mongodb:
-      uri: mongodb://clwlc:123456@192.168.220.1:27020/clwlc
-      database: clwlw
+      uri: mongodb://clwlc:123456@192.168.220.129:27017/clwlc
+#      host: '@mongoIp@'
+#      port: 27017
+#      username: clwlc
+#      password:
+#        - 123456
+#      database: clwlw
 #      authentication-database: admin
 
   application:
@@ -16,7 +23,7 @@ spring:
     nacos:
       server-addr: localhost:8848
   redis:
-    host: 192.168.220.1
+    host: '@redisIp@'
     port: 6379
 
 server:
@@ -27,4 +34,3 @@ mybatis-plus:
     - classpath:mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-

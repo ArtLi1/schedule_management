@@ -23,7 +23,7 @@ public interface userApi {
     List<User> getUserList(@PathVariable long sid);
 
     @PostMapping("/user")
-    int addUser(@Valid @RequestBody User user);
+    boolean addUser(@Valid @RequestBody User user);
 
     @PutMapping("/user")
     boolean modifyUser(@RequestBody User user);

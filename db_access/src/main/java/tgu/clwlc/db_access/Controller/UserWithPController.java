@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tgu.clwlc.FeignClient.pojo.mysql.UserWithP;
-import tgu.clwlc.db_access.dao.UserPMapper;
+import tgu.clwlc.FeignClient.pojo.mysql.Permission.UserWithP;
+import tgu.clwlc.db_access.dao.UserWithPMapper;
 
 import javax.annotation.Resource;
 
@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 @RequestMapping("/userP")
 public class UserWithPController {
     @Resource
-    UserPMapper userPMapper;
+    UserWithPMapper userPMapper;
 
     @GetMapping("/uid/{uid}")
     public UserWithP getUserByUid(@PathVariable Long uid){
