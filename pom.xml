@@ -58,6 +58,7 @@
                 <version>${Feign.version}</version>
             </dependency>
 
+
         </dependencies>
     </dependencyManagement>
 
